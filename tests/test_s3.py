@@ -11,10 +11,8 @@ from simple_file_repository.exceptions import StorageError
 from simple_file_repository.s3storage import S3Storage
 
 
-@mock_s3
-def test_moto_works(s3_bucket):
-    conn = boto3.client('s3', region_name='us-east-1')
-    conn.create_bucket(Bucket=s3_bucket)
+def test_moto_works(s3_client, s3_bucket):
+    s3_client.create_bucket(Bucket=s3_bucket)
 
     s3_storage = S3Storage(database='db', bucket=s3_bucket,
                            region='us-east-1',
@@ -22,6 +20,24 @@ def test_moto_works(s3_bucket):
     assert s3_storage.count() == 0
     file_id = s3_storage.store(b'data')
     assert file_id
+
+
+def test_moto_nosuchkey(s3_client):
+    s3_client.create_bucket(Bucket='mybucket')
+
+    # it does not throw s3_client.exceptions.ClientError:
+    try:
+        s3_client.get_object(Bucket='mybucket', Key='badkey')
+    except s3_client.exceptions.NoSuchKey as e:
+        logging.debug("Error: {!r}".format(e))
+        assert e.response['Error']['Code'] == 'NoSuchKey'
+
+
+def test_moto_delete_nonexistent(s3_client):
+    s3_client.create_bucket(Bucket='mybucket')
+
+    # it does not throw at all
+    s3_client.delete_object(Bucket='mybucket', Key='badkey')
 
 
 def test_s3_storage_works(s3_storage_db):
