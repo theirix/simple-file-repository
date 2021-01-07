@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "simple-file-repository"
-version = "0.1.0"
+version = "0.2.0"
 description = "A simple file and photo repository."
 authors = ["theirix <theirix@gmail.com>"]
 license = "MIT"
