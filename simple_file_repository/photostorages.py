@@ -18,6 +18,8 @@ class PhotoStorages:
         self._storages = None
         self._storage_directory = None
 
+    # False positive for Python 3.9, see pylint bug 3882
+    # pylint: disable=unsubscriptable-object
     def init_app(self, names: [str], storage_directory: str,
                  imagemagick_convert: str,
                  names_for_s3: [str],
