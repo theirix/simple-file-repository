@@ -1,7 +1,7 @@
 import logging
 from typing import Optional
 
-from .exceptions import PhotoStorageNotFoundError
+from .exceptions import PhotoStorageNotFoundError, StorageNotInitializedError
 from .filestorage import FileStorage
 from .photostorage import PhotoStorage
 from .s3storage import S3Storage
@@ -64,6 +64,8 @@ class PhotoStorages:
 
          :param item: a database name
          :return: a photo storage"""
+        if not self._storage_directory:
+            raise StorageNotInitializedError('Call init_app')
         if item in self._storages:
             return self._storages[item]
         raise PhotoStorageNotFoundError('PhotoStorage named {} not found in {}'.
