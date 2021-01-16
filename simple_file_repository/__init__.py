@@ -14,4 +14,4 @@ from .photostorages import PhotoStorages  # noqa: F401
 from .s3storage import S3Storage  # noqa: F401
 from .storage import Storage  # noqa: F401
 
-__version__ = '0.1.0'
+__version__ = '0.3.0'
