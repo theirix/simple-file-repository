@@ -2,6 +2,7 @@ import glob
 import logging
 import os
 import shutil
+import tempfile
 from typing import Iterable, Optional
 from uuid import UUID, uuid4
 
@@ -126,12 +127,23 @@ class FileStorage(Storage):
         self._check_init()
         file_id = override_id if override_id else self._generate_file_id()
         try:
+            # detect target path
             stripe_dir = self._select_or_create_stripe(file_id)
             blob_path = os.path.join(stripe_dir, file_id.hex + '.bin')
             if os.path.isfile(blob_path):
                 raise StorageError('File {} already stored'.format(file_id))
-            with open(blob_path, 'wb') as f:
-                f.write(content)
+
+            # open a temporary file
+            tmp_fd, tmp_path = tempfile.mkstemp(prefix='sfr-', suffix='.tmp')
+            try:
+                os.write(tmp_fd, content)
+                os.close(tmp_fd)
+            except Exception as e:  # pragma: no cover
+                # remove tmp file
+                os.unlink(tmp_path)
+                raise StorageError(e) from e
+            # move to target path
+            shutil.move(tmp_path, blob_path)
             os.chmod(blob_path, self._file_perm)
             return file_id
         except StorageError:
