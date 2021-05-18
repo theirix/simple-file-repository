@@ -4,6 +4,7 @@ from typing import Iterable, Optional
 from uuid import UUID, uuid4
 
 import boto3
+from botocore.config import Config
 from botocore.exceptions import IncompleteReadError
 
 from .exceptions import StorageError, StorageNotFoundError
@@ -18,7 +19,8 @@ class S3Storage(Storage):
     def __init__(self, database: str, bucket: str,
                  region: str, access_key_id: str, secret_access_key: str,
                  endpoint_url: Optional[str] = None,
-                 default_cache_control: Optional[str] = None):
+                 default_cache_control: Optional[str] = None,
+                 max_attempts: Optional[int] = None):
         """Initialize a photo storages.
 
          :param database: a database name
@@ -31,9 +33,19 @@ class S3Storage(Storage):
            It will be passed to `CacheControl` field in S3 calls.
          """
         session = boto3.session.Session()
+        if max_attempts is not None:
+            config = Config(
+                retries={
+                    'max_attempts': max_attempts,
+                    'mode': 'standard'
+                }
+            )
+        else:
+            config = None
         client_args = dict(service_name='s3', region_name=region,
                            aws_access_key_id=access_key_id,
-                           aws_secret_access_key=secret_access_key)
+                           aws_secret_access_key=secret_access_key,
+                           config=config)
         if endpoint_url is not None:
             client_args['endpoint_url'] = endpoint_url
         self.s3_client = session.client(**client_args)
