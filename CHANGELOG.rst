@@ -2,6 +2,11 @@
 Change Log
 ==========
 
+0.4 (2021-05-18)
+-----------------
+
+* Allow to configure boto3 max_attempts in S3Storage
+
 0.3 (2021-01-16)
 -----------------
 
