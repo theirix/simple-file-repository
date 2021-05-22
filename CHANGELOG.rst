@@ -2,6 +2,11 @@
 Change Log
 ==========
 
+0.5 (2021-05-23)
+-----------------
+
+* Allow to configure botocore config in S3Storage
+
 0.4 (2021-05-18)
 -----------------
 
