@@ -78,7 +78,7 @@ class S3Storage(Storage):
         except self.s3_client.exceptions.ClientError as e:  # pragma: no cover
             raise StorageError(e) from e
 
-    def get_path(self, file_id: UUID, params: Optional[dict]) -> str:
+    def get_path(self, file_id: UUID, params: Optional[dict] = None) -> str:
         key = self._get_key(file_id)
         expires_sec = int(datetime.timedelta(hours=24).total_seconds())
         effective_params = {'Bucket': self.bucket,

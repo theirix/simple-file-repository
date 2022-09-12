@@ -16,7 +16,7 @@ class Storage(abc.ABC, metaclass=ABCMeta):
         """Retrieve file by file_id."""
 
     @abstractmethod
-    def get_path(self, file_id: UUID, params: Optional[dict]) -> str:
+    def get_path(self, file_id: UUID, params: Optional[dict] = None) -> str:
         """Retrieve file by file_id."""
 
     @abstractmethod

@@ -52,7 +52,7 @@ class PhotoStorage(Storage):
         self._check_init()
         self._storage.clean()
 
-    def get_path(self, file_id: UUID, params: Optional[dict]):
+    def get_path(self, file_id: UUID, params: Optional[dict] = None):
         self._check_init()
         return self._storage.get_path(file_id, params)
 
