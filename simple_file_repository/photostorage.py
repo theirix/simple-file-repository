@@ -52,9 +52,9 @@ class PhotoStorage(Storage):
         self._check_init()
         self._storage.clean()
 
-    def get_path(self, file_id: UUID):
+    def get_path(self, file_id: UUID, params: Optional[dict]):
         self._check_init()
-        return self._storage.get_path(file_id)
+        return self._storage.get_path(file_id, params)
 
     def get_mimetype(self, file_id: UUID) -> str:
         self._check_init()

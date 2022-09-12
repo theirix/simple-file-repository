@@ -107,7 +107,7 @@ class FileStorage(Storage):
         except Exception as e:  # pragma: no cover
             raise StorageError(e) from e
 
-    def get_path(self, file_id: UUID) -> str:
+    def get_path(self, file_id: UUID, params: Optional[dict]) -> str:
         stripe_dir = self._select_stripe(file_id)
         blob_path = os.path.join(stripe_dir, file_id.hex + '.bin')
         if not os.path.isfile(blob_path):

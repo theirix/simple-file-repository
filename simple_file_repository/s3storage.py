@@ -19,7 +19,7 @@ class S3Storage(Storage):
                  region: str, access_key_id: str, secret_access_key: str,
                  endpoint_url: Optional[str] = None,
                  default_cache_control: Optional[str] = None,
-                 config = None):
+                 config=None):
         """Initialize a photo storages.
 
          :param database: a database name
@@ -78,12 +78,15 @@ class S3Storage(Storage):
         except self.s3_client.exceptions.ClientError as e:  # pragma: no cover
             raise StorageError(e) from e
 
-    def get_path(self, file_id: UUID) -> str:
+    def get_path(self, file_id: UUID, params: Optional[dict]) -> str:
         key = self._get_key(file_id)
         expires_sec = int(datetime.timedelta(hours=24).total_seconds())
+        effective_params = {'Bucket': self.bucket,
+                            'Key': key}
+        if params:
+            effective_params.update(params)
         url = self.s3_client.generate_presigned_url('get_object',
-                                                    Params={'Bucket': self.bucket,
-                                                            'Key': key},
+                                                    Params=effective_params,
                                                     ExpiresIn=expires_sec)
         # self.logger.debug("Presigned url {}".format(url))
         return url
