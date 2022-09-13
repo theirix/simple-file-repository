@@ -2,6 +2,11 @@
 Change Log
 ==========
 
+0.6 (2022-09-12)
+-----------------
+
+* Allow passing extra parameters to S3 presigned URL
+
 0.5 (2021-05-23)
 -----------------
 
