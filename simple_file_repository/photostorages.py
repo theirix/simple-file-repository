@@ -26,7 +26,8 @@ class PhotoStorages:
                  bucket: str,
                  region: str, access_key_id: str, secret_access_key: str,
                  endpoint_url: Optional[str],
-                 default_cache_control: Optional[str]
+                 default_cache_control: Optional[str],
+                 config=None
                  ):
         """Initialize photo storages.
 
@@ -50,7 +51,9 @@ class PhotoStorages:
                                     access_key_id=access_key_id,
                                     secret_access_key=secret_access_key,
                                     endpoint_url=endpoint_url,
-                                    default_cache_control=default_cache_control)
+                                    default_cache_control=default_cache_control,
+                                    config=config,
+                                    )
             else:
                 storage = FileStorage(storage_directory=storage_directory,
                                       database=name,
