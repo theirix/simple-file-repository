@@ -9,18 +9,18 @@ classifiers = ["Development Status :: 4 - Beta",
     "Programming Language :: Python"]
 
 [tool.poetry.dependencies]
-python = "^3.5"
-boto3 = "^1.14.53"
-requests = "^2.24.0"
+python = "^3.7,<3.10"
+boto3 = "~1"
+requests = "~2"
 filemagic = "^1.6"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.0"
+pytest = "^7.0"
 pylint = "^2.6.0"
-moto = { version = ">= 1.3.16", extras=["s3"] }
-responses = '0.12.0'
-pytest-cov = "^2.10.1"
-flake8 = "^3.8.4"
+moto = { version = "~4", extras=["s3"] }
+responses = '^0.22.0'
+pytest-cov = "^4"
+flake8 = "^5"
 flake8-docstrings = "^1.5.0"
 flake8-rst-docstrings = "^0.0.14"
 
@@ -30,5 +30,5 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.pylint.messages_control]
 disable = ["invalid-name", "too-many-arguments", "too-few-public-methods",
-    "missing-module-docstring"
+    "missing-module-docstring", "consider-using-f-string"
 ]
