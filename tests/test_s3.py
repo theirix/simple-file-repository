@@ -156,7 +156,7 @@ def test_get_mimetype(s3_storage_db, sample_image):
 def test_get_mimetype_plain(s3_storage_db):
     file_id = s3_storage_db.store(b'cafe\x01D\04')
     mimetype = s3_storage_db.get_mimetype(file_id)
-    assert mimetype == 'application/octet-stream'
+    assert mimetype == 'binary/octet-stream'
 
 
 def test_get_mimetype_explicit_needed(s3_storage_db, sample_image):
