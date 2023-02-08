@@ -9,7 +9,7 @@ classifiers = ["Development Status :: 4 - Beta",
     "Programming Language :: Python"]
 
 [tool.poetry.dependencies]
-python = "^3.7,<3.11"
+python = "^3.7,<=3.12"
 boto3 = "~1"
 requests = "~2"
 filemagic = "^1.6"
