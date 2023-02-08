@@ -14,7 +14,7 @@ boto3 = "~1"
 requests = "~2"
 filemagic = "^1.6"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "^7.0"
 pylint = "^2.6.0"
 moto = { version = "~4", extras=["s3"] }
