@@ -33,3 +33,7 @@ build-backend = "poetry.core.masonry.api"
 disable = ["invalid-name", "too-many-arguments", "too-few-public-methods",
     "missing-module-docstring", "consider-using-f-string"
 ]
+
+[project.urls]
+Homepage = "https://github.com/theirix/simple-file-repository"
+Repository = "https://github.com/theirix/simple-file-repository"
