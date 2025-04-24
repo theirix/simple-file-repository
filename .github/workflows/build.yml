@@ -29,10 +29,16 @@ jobs:
     - name: Lint with flake8
       run: |
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        poetry run flake8 simple_file_repository --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+          poetry run flake8 simple_file_repository --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Lint with pylint
       run: |
-        poetry run pylint simple_file_repository
+        poetry run pylint simple_file_repository tests
+    - name: Lint with black
+      run: |
+        poetry run black --check simple_file_repository tests
+    - name: Lint with isort
+      run: |
+        poetry run isort --check-only simple_file_repository tests
     - name: Test with pytest
       run: |
         poetry run pytest
