@@ -44,9 +44,9 @@ class PhotoStorage(Storage):
         self._check_init()
         return self._storage.exists(file_id)
 
-    def delete(self, file_id: UUID):
+    def delete(self, file_id: UUID, silent: bool = False):
         self._check_init()
-        return self._storage.delete(file_id)
+        return self._storage.delete(file_id, silent)
 
     def clean(self):
         self._check_init()

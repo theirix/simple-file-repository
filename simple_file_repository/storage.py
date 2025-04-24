@@ -34,7 +34,7 @@ class Storage(abc.ABC, metaclass=ABCMeta):
         """Retrieve mimetype by file_id."""
 
     @abstractmethod
-    def delete(self, file_id: UUID):
+    def delete(self, file_id: UUID, silent: bool = False):
         """Deletes a file by file_id."""
 
     @abstractmethod

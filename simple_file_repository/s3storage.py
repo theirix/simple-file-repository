@@ -123,10 +123,10 @@ class S3Storage(Storage):
         except self.s3_client.exceptions.ClientError as e:  # pragma: no cover
             raise StorageError(e) from e
 
-    def delete(self, file_id: UUID):
+    def delete(self, file_id: UUID, silent: bool = False):
         key = self._get_key(file_id)
         # must throw an error if no key found
-        if not self.exists(file_id):
+        if not silent and not self.exists(file_id):
             raise StorageNotFoundError('File {} does not exist'.format(file_id))
         # now delete (will not throw error if no such key)
         try:

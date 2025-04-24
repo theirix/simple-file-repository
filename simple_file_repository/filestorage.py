@@ -151,13 +151,16 @@ class FileStorage(Storage):
         except Exception as e:  # pragma: no cover
             raise StorageError(e) from e
 
-    def delete(self, file_id: UUID):
+    def delete(self, file_id: UUID, silent: bool = False):
         stripe_dir = self._select_stripe(file_id)
         blob_path = os.path.join(stripe_dir, file_id.hex + '.bin')
-        if not os.path.isfile(blob_path):
+        if not silent and not os.path.isfile(blob_path):
             raise StorageNotFoundError('File {} does not exist'.format(file_id))
         try:
             os.unlink(blob_path)
+        except FileNotFoundError:
+            if not silent:
+                raise
         except Exception as e:  # pragma: no cover
             raise StorageError(e) from e
 

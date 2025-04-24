@@ -73,6 +73,15 @@ def test_delete_nonexisting(file_storage_db):
     assert file_storage_db.count() == 1
 
 
+def test_delete_nonexisting_silent(file_storage_db):
+    content = 'hello world'.encode('utf-8')
+    file_id = file_storage_db.store(content)
+    assert file_storage_db.count() == 1
+    wrong_id = uuid.UUID(hex=file_id.hex[::-1])
+    file_storage_db.delete(wrong_id, silent=True)
+    assert file_storage_db.count() == 1
+
+
 def test_list(file_storage_db):
     file_id1 = file_storage_db.store(b'foo')
     file_id2 = file_storage_db.store(b'bar')
