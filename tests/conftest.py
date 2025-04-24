@@ -19,12 +19,13 @@ def fixture_s3_client() -> boto3.client:
     # use yielding fixture with context manager, no need to mock_s3 consuming test itself
     # see https://github.com/spulec/moto/issues/620
     with mock_s3():
-        s3_client = boto3.client('s3', region_name='us-east-1')
-        yield s3_client
+        client = boto3.client('s3', region_name='us-east-1')
+        yield client
 
 
 # noinspection PyUnusedLocal
 @pytest.fixture(name='s3_storage_db')
+# pylint: disable=redefined-outer-name
 def fixture_s3_storage_db(s3_client, s3_bucket):
     s3_client.create_bucket(Bucket=s3_bucket)
 

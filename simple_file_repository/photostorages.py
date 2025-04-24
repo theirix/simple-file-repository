@@ -41,6 +41,7 @@ class PhotoStorages:
          :param secret_access_key: see :class:`S3Storage` for documentation
          :param endpoint_url: see :class:`S3Storage` for documentation
          :param default_cache_control: see :class:`S3Storage` for documentation
+         :param config: extra config
          """
         self._storage_directory = storage_directory
 

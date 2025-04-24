@@ -65,7 +65,7 @@ def test_photo_storages_key_access(tmpdir):
     assert 'db' in repr(storages)
 
 
-def test_clean(file_storage_db, tmpdir):
+def test_clean(tmpdir):
     storages = PhotoStorages()
 
     storages.init_app(names=['db'], storage_directory=str(tmpdir),
@@ -127,7 +127,7 @@ def test_thumb(s3_storage_db, sample_image, convert_path):
     if not convert_path:
         raise pytest.skip('convert utility is not found')
 
-    logging.info("Imagemagick at {} will be invoked".format(convert_path))
+    logging.info("Imagemagick at %s will be invoked", convert_path)
     storage = PhotoStorage(s3_storage_db, convert_path)
 
     file_id = storage.store(sample_image, content_type='image/jpeg')

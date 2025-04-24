@@ -4,7 +4,9 @@ import uuid
 
 import pytest
 
-from simple_file_repository.exceptions import StorageError, StorageNotInitializedError, StorageNotFoundError
+from simple_file_repository.exceptions import (StorageError,
+                                               StorageNotInitializedError,
+                                               StorageNotFoundError)
 from simple_file_repository.filestorage import FileStorage
 
 
@@ -123,7 +125,7 @@ def test_clean(file_storage_db, tmpdir):
     assert not os.path.isdir(os.path.join(str(tmpdir), 'db'))
 
 
-def test_access_after_clean(file_storage_db, tmpdir):
+def test_access_after_clean(file_storage_db):
     content = 'hello world'.encode('utf-8')
     file_storage_db.store(content)
     assert file_storage_db.count() == 1

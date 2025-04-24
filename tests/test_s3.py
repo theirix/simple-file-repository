@@ -2,10 +2,8 @@ import logging
 import time
 import uuid
 
-import boto3.resources
 import pytest
 import requests
-from moto import mock_s3
 
 from simple_file_repository.exceptions import StorageError
 from simple_file_repository.s3storage import S3Storage
@@ -29,7 +27,7 @@ def test_moto_nosuchkey(s3_client):
     try:
         s3_client.get_object(Bucket='mybucket', Key='badkey')
     except s3_client.exceptions.NoSuchKey as e:
-        logging.debug("Error: {!r}".format(e))
+        logging.debug("Error: %r", e)
         assert e.response['Error']['Code'] == 'NoSuchKey'
 
 
@@ -70,7 +68,7 @@ def test_write_with_content_type(s3_storage_db, sample_image, s3_client, s3_buck
 
     # check content-type in requested presigned url - it is overridden
     path = s3_storage_db.get_path(file_id)
-    r = requests.get(path)
+    r = requests.get(path, timeout=30)
     assert r.status_code == 200
     logging.debug(r.headers)
     assert r.headers['Content-Type'] == content_type
@@ -87,7 +85,7 @@ def test_write_with_cache_control(s3_storage_db, sample_image, s3_client, s3_buc
     assert response['CacheControl'] == cache_control
 
     path = s3_storage_db.get_path(file_id)
-    r = requests.get(path)
+    r = requests.get(path, timeout=30)
     assert r.status_code == 200
     logging.debug(r.headers)
     assert 'Cache-Control' in r.headers
@@ -113,7 +111,7 @@ def test_write_with_default_cache_control(sample_image, s3_client, s3_bucket):
     assert s3_storage_db.count() == 1
 
     path = s3_storage_db.get_path(file_id)
-    r = requests.get(path)
+    r = requests.get(path, timeout=30)
     assert r.status_code == 200
     logging.debug(r.headers)
     assert 'Cache-Control' in r.headers
@@ -190,7 +188,7 @@ def test_read_path(s3_storage_db):
     assert path
     assert path.startswith('https://')
 
-    r = requests.get(path)
+    r = requests.get(path, timeout=30)
     assert r.status_code == 200
     fetched_content = r.content
     logging.debug(fetched_content)
@@ -251,7 +249,7 @@ def test_repr(s3_storage_db):
     assert not s3_storage_db.is_local()
 
 
-def test_clean_ignored(s3_storage_db, tmpdir):
+def test_clean_ignored(s3_storage_db):
     content = 'hello world'.encode('utf-8')
     s3_storage_db.store(content)
     assert s3_storage_db.count() == 1
