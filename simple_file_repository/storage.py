@@ -24,9 +24,14 @@ class Storage(abc.ABC, metaclass=ABCMeta):
         """Check if the file by file_id exists."""
 
     @abstractmethod
-    def store(self, content: bytes, content_type: Optional[str] = None,
-              tags: Optional[dict] = None, override_id: Optional[UUID] = None,
-              cache_control: Optional[str] = None) -> UUID:
+    def store(
+        self,
+        content: bytes,
+        content_type: Optional[str] = None,
+        tags: Optional[dict] = None,
+        override_id: Optional[UUID] = None,
+        cache_control: Optional[str] = None,
+    ) -> UUID:
         """Stores file and returns a file-id."""
 
     @abstractmethod
@@ -41,16 +46,16 @@ class Storage(abc.ABC, metaclass=ABCMeta):
     def count(self) -> int:
         """Returns file count in storage.
 
-         **NOTE**: Should be used only for tests or debugging."""
+        **NOTE**: Should be used only for tests or debugging."""
 
     @abstractmethod
     def list(self) -> Iterable[str]:
         """Returns file list in storage.
 
-         **NOTE**: Should be used only for tests or debugging."""
+        **NOTE**: Should be used only for tests or debugging."""
 
     @abstractmethod
     def clean(self):
         """Delete all items in storage.
 
-         **NOTE**: Should be used only for tests or debugging."""
+        **NOTE**: Should be used only for tests or debugging."""
