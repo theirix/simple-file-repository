@@ -39,7 +39,8 @@ disable = ["invalid-name",
     "missing-module-docstring",
     "missing-function-docstring",
     "consider-using-f-string",
-    "use-dict-literal"
+    "use-dict-literal",
+    "duplicate-code"
 ]
 
 [project.urls]

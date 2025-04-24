@@ -79,7 +79,7 @@ class S3Storage(Storage):
                     return body
                 except IncompleteReadError as e:
                     self.logger.info(
-                        "Got IncompleteReadError %s, " "retry #%d", str(e), attempt
+                        "Got IncompleteReadError %s, retry #%d", str(e), attempt
                     )
             raise StorageError("Cannot get file due to IncompleteReadError")
         except self.s3_client.exceptions.NoSuchKey:
