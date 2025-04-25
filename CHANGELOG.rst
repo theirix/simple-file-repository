@@ -2,6 +2,16 @@
 Change Log
 ==========
 
+0.11 (2025-04-25)
+-----------------
+
+* Allow silent deletes
+* Fixes for Poetry
+* Drop Python 3.8
+* Add project.urls
+* Update documentation
+* Reformat code
+
 0.10 (2024-07-02)
 -----------------
 
